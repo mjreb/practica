@@ -29,7 +29,7 @@ public class UsuarioService {
     
      /**
      * Crea un nuevo usuario en la base de datos y retorna un UsuarioDTO 
-     * con la información relevante y evitar exponer la contraseña..
+     * con la información relevante y evitar exponer la contraseña.
      *
      * @param usuario objeto de tipo (Usuario) con los datos a persistir
      * @return un UsuarioDTO con id, nombre, email y rol del usuario creado

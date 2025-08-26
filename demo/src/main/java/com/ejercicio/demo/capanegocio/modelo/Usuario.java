@@ -45,6 +45,9 @@ public class Usuario {
         @Column(name = "contrasena")
         private String contrasena;
         
+        // Agregué el atributo rol para poder hacer la autorización de acceso a funcionalidades
+        // depediendo si el usuario es un administrador o un usuario normal. 
+        
         @Column(name = "rol")
         private String rol;
         

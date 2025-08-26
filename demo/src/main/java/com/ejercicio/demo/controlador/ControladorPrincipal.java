@@ -95,7 +95,7 @@ public class ControladorPrincipal {
     }
     
     /**
-     * Edita los datos de un usuario existente. Método sólo válido para administradores.
+     * Edita los datos de un usuario existente. Método sólo válido para administradores debido a que se puede modificar el rol.
      *
      * @param header Token JWT del usuario que realiza la petición.
      * @param usuario Objeto con los datos a modificar.
