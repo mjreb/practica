@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
- * @author vsfs2
+ * Controlador encargado del proceso de autenticación (login).
+ * 
+ * Este controlador recibe credenciales de un usuario, valida la contraseña
+ * contra la base de datos y genera un token JWT que se utilizará en las
+ * siguientes peticiones para autorización.
+ * @author Maria de Jesus Rebolledo Bustillo
  */
 @RestController
 @RequestMapping("/login")
@@ -29,7 +33,18 @@ public class LoginControlador {
     @Autowired 
     private UsuarioService service;
     
-    
+    /**
+     * Realiza el proceso de login de un usuario.
+     * 
+     *   Recibe un objeto LoginRequest con idUsuario y contraseña.
+     *   Consulta al usuario en base de datos mediante UsuarioService.
+     *   Valida la contraseña con  validarContrasena.
+     *   Genera un token JWT con la información del usuario (id, nombre y rol).
+     * 
+     * 
+     * @param datos Objeto con las credenciales de acceso (idUsuario y contraseña).
+     * @return Token JWT si la autenticación es exitosa, o el mensaje de error si falla.
+     */
     
     @PostMapping
     public String login(@RequestBody LoginRequest datos) {
@@ -45,8 +60,6 @@ public class LoginControlador {
             return e.getMessage();
         }
 
-        
-        // Para simplificar: no usamos contraseña
         
     }
     

@@ -27,36 +27,38 @@ public class JwtConfiguracion {
      */
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     /**
-     * Tiempo de expiración del token es una hora
+     * Tiempo de expiración del token es una hora en milisegundos
      */
     private final long expirationMs = 1000 * 60 * 60;
     
     /**
-     * Método para generar el token
-     * @param id del usuario
-     * @param nombre del usuario
-     * @param rol que tiene el usuario (ADMIN o USER)
-     * @return 
+     * Método para generar el token JWT con la informació del usuario
+     * @param id Identificador único del usuario.
+     * @param nombre Nombre del usuario (se guarda como subject).
+     * @param rol Rol del usuario (ejemplo: ADMIN o USER).
+     * @return Token JWT firmado con la clave secreta.
      */
     public String generarToken(Integer id, String nombre, String rol){
         return Jwts.builder()
                 .setSubject(nombre) // Registered claim 
                 .claim("rol", rol) // Public claim
                 .claim("id", id) // Public claim 
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .setIssuedAt(new Date()) // fecha de creación
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs)) // tiempo de expiración
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
 
     }
     
     /**
-     * Método para validar si el token está expirado o ha sido modificado.
+     * Método para validar si el token es correcto.
+     * Comprueba que la firma sea válida, que no esté expirado y que la estructura del JWT sea coorrecta.
+     *
      * Construyo un objetoparserBuilder() para leer y validar el token. Asigno la llave con
-     * la que debe alidar el token con .setSigningKey(secretKey). 
-     * .parseClaimsJws(token) revisa que la firma se válida, que el token no esté expirado y que la estructura sea correcta. 
-     * @param token
-     * @return 
+     * la que debe validar el token con .setSigningKey(secretKey). 
+     * .parseClaimsJws(token) revisa que la firma sea válida, que el token no esté expirado y que la estructura sea correcta. 
+     * @param token Token JWT a validar.
+     * @return true si el token es válido, false en caso contrario.
      */
     public boolean validarToken(String token) {
         try {
@@ -68,9 +70,10 @@ public class JwtConfiguracion {
     }
     
     /**
+     * Extrae el rol de un token JWT válido.
      * 
-     * @param token
-     * @return 
+     * @param token Token JWT firmado previamente.
+     * @return Rol contenido en el claim rol.
      */
       public String extraerRol(String token) {
         return Jwts.parserBuilder()
