@@ -31,3 +31,30 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Build
+target/
+out/
+build/
+
+# Maven Wrapper cache
+.mvn/wrapper/*
+!mvnw
+!mvnw.cmd
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.tmp
+__MACOSX/

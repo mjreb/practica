@@ -4,7 +4,7 @@
  */
 package com.ejercicio.demo.controlador;
 
-import com.ejercicio.demo.Util.JwtConfiguracion;
+import com.ejercicio.demo.util.JwtConfiguracion;
 import com.ejercicio.demo.capanegocio.UsuarioService;
 import com.ejercicio.demo.capanegocio.modelo.Usuario;
 import com.ejercicio.demo.capanegocio.modelo.UsuarioDTO;
@@ -35,12 +35,16 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/usuarios")
 public class ControladorPrincipal {
+
+    public ControladorPrincipal(UsuarioService service, JwtConfiguracion configuracion) {
+        this.service = service;
+        this.configuracion = configuracion;
+    }
+
     
-    @Autowired
-    private UsuarioService service;
+    private final UsuarioService service;
     
-    @Autowired
-    private JwtConfiguracion configuracion; 
+    private final JwtConfiguracion configuracion; 
     
     /**
      * Consulta la lista de usuarios registrados.
@@ -147,4 +151,3 @@ public class ControladorPrincipal {
    
     
     
-

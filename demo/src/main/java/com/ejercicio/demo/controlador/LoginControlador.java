@@ -4,7 +4,7 @@
  */
 package com.ejercicio.demo.controlador;
 
-import com.ejercicio.demo.Util.JwtConfiguracion;
+import com.ejercicio.demo.util.JwtConfiguracion;
 import com.ejercicio.demo.capanegocio.UsuarioService;
 
 import com.ejercicio.demo.capanegocio.modelo.Usuario;
@@ -26,12 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/login")
 public class LoginControlador {
+
+    public LoginControlador(UsuarioService service, JwtConfiguracion configuracion) {
+        this.service = service;
+        this.configuracion = configuracion;
+    }
+
     
-    @Autowired 
-    private JwtConfiguracion configuracion; 
+    private final JwtConfiguracion configuracion; 
     
-    @Autowired 
-    private UsuarioService service;
+    private final UsuarioService service;
     
     /**
      * Realiza el proceso de login de un usuario.
