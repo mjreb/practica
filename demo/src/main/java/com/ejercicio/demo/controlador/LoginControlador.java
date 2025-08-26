@@ -8,7 +8,7 @@ import com.ejercicio.demo.Util.JwtConfiguracion;
 import com.ejercicio.demo.capanegocio.UsuarioService;
 
 import com.ejercicio.demo.capanegocio.modelo.Usuario;
-import com.example.demo.capanegocio.modelo.LoginRequest;
+import com.ejercicio.demo.capanegocio.modelo.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +31,7 @@ public class LoginControlador {
     
     
     
-    @PostMapping("/hola")
+    @PostMapping
     public String login(@RequestBody LoginRequest datos) {
         System.out.print(datos);
         try{

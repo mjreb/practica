@@ -7,6 +7,7 @@ package com.ejercicio.demo.capanegocio;
 import com.ejercicio.demo.capanegocio.modelo.Usuario;
 import com.ejercicio.demo.capanegocio.modelo.UsuarioDTO;
 import com.ejercicio.demo.capapersistencia.UsuarioRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repository; 
     
-    public UsuarioDTO createUser(Usuario usuario){    
+    public UsuarioDTO createUser(Usuario usuario){ 
+        
+        
         repository.save(usuario); 
         
         UsuarioDTO dto = new UsuarioDTO(
@@ -39,17 +42,34 @@ public class UsuarioService {
     }
     
     public void deleteUser(Integer id){
-        repository.deleteById(id);
-        
+        consultarUsuarioPorId(id);
+        repository.deleteById(id);  
     }
      
     
-    public void updateUser(){
+    public Usuario updateUser(Usuario usuario){
+        Usuario usuarioExistente = consultarUsuarioPorId(usuario.getIdUsuario());
+        usuarioExistente.setContrasena(usuario.getContrasena());
+        usuarioExistente.setEmail(usuario.getEmail());
+        usuarioExistente.setNombre(usuario.getNombre());
+        usuarioExistente.setRol(usuario.getRol());
+        
+        return repository.save(usuarioExistente);
+        
         
     }
     
-    public List<Usuario> consultarUsuarios(){
-        return repository.findAll();
+    public List<UsuarioDTO> consultarUsuarios(){
+        
+        List<Usuario> usuarios = repository.findAll();
+        List<UsuarioDTO> usuariosDTO = new ArrayList();
+        
+        for (Usuario u: usuarios){
+            UsuarioDTO usuarioDTO = new UsuarioDTO(u.getIdUsuario(),u.getNombre(), u.getEmail(), u.getRol());
+            usuariosDTO.add(usuarioDTO);
+        }
+        
+        return usuariosDTO;
         
     }
     
