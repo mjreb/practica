@@ -17,7 +17,8 @@ import jakarta.validation.constraints.Size;
 
 
 /**
- *
+ * Entidad que representa a un usuario en el sistema.
+ * Se mapea a la tabla "usuario" de la base de datos
  * @author Maria de Jesús Rebolledo Bustillo
  */
 @Entity
@@ -47,60 +48,28 @@ public class Usuario {
         @Column(name = "rol")
         private String rol;
         
-        
-
-    /**
-     * Get the value of email
-     *
-     * @return the value of email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Set the value of email
-     *
-     * @param email new value of email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
 
-    /**
-     * Get the value of nombre
-     *
-     * @return the value of nombre
-     */
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * Set the value of nombre
-     *
-     * @param nombre new value of nombre
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-
-    /**
-     * Get the value of idUsuario
-     *
-     * @return the value of idUsuario
-     */
+   
     public int getIdUsuario() {
         return idUsuario;
     }
 
-    /**
-     * Set the value of idUsuario
-     *
-     * @param idUsuario new value of idUsuario
-     */
+ 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }

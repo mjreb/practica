@@ -5,8 +5,13 @@
 package com.ejercicio.demo.capanegocio.modelo;
 
 /**
- *
- * @author vsfs2
+ *  Clase que representa la petición de inicio de sesión (login).
+ * Se utiliza para encapsular las credenciales ingresadas por el usuario, 
+ * las cuales incluyen su identificador único y su contraseña.
+ * 
+ * Este objeto se recibe en el cuerpo de la petición HTTP 
+ * cuando un usuario intenta autenticarse.
+ * @author María de Jesús Rebolledo Bustillo
  */
 public class LoginRequest {
     private Integer idUsuario;
