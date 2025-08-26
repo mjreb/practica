@@ -4,12 +4,11 @@
  */
 package com.ejercicio.demo.capanegocio.modelo;
 
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Maria de Jesus Rebolledo Bustillo
- * Data Object Tranfer de Usuario que impide que información innecesaria (password) se revele en la respuesta. 
+ * Data Object Tranfer de Usuario que impide que información innecesaria (contraseña) se revele en la respuesta. 
  */
 
 public class UsuarioDTO {

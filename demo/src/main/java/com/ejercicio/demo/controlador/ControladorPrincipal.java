@@ -26,7 +26,9 @@ import org.springframework.web.server.ResponseStatusException;
  *
  * @author Maria de Jesus Rebolledo Bustillo 
  * 
- * Controlador REST que tiene los endpoints 
+ * Controlador REST para la gestión de usuarios.
+ * Proporciona endpoints para consultar, crear, eliminar y editar usuarios.
+ * Cada operación valida el rol del usuario a través de un token JWT
  */
 
 @RestController
@@ -39,6 +41,11 @@ public class ControladorPrincipal {
     @Autowired
     private JwtConfiguracion configuracion; 
     
+    /**
+     * Consulta la lista de usuarios registrados.
+     * Tanto usuarios normales como administradores pueden consultarlo. 
+     * @return ResponseEntity con la lista de usuarios en formato DTO.
+     */
     
     @PostMapping("/consultarUsuarios")
     public ResponseEntity <List<UsuarioDTO>> consultarUsuarios(){       
@@ -47,20 +54,33 @@ public class ControladorPrincipal {
      }
     
     
+    /**
+     * Crea un nuevo usuario en el sistema. Este método sólo es válido para administradores.
+     *
+     * @param usuario Datos del usuario a crear que se mapean automáticamente a un objeto Usuario.
+     * @param header Token JWT del usuario que realiza la petición.
+     * @return ResponseEntity con el usuario creado o un error en caso de fallo.
+     */
+    
     @PostMapping("/crearUsuario")
     public ResponseEntity <?> crearUsuario(@RequestBody Usuario usuario, @RequestHeader("Authorization") String header){
-        
         try{
                 validarRol(header, "ADMIN");
                 UsuarioDTO usuarioDTO = service.createUser(usuario);
                 return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);  
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
-            
-            } 
-
+              } 
      }
-        
+       
+    
+    /**
+     * Elimina un usuario dado su ID. Este método sólo es válido para administradores.
+     *
+     * @param idUsuario Identificador del usuario a eliminar que viene en el path.
+     * @param header Token JWT del usuario que realiza la petición.
+     * @return ResponseEntity con un mensaje de confirmación o error.
+     */
     @DeleteMapping("/eliminarUsuario/{id}")
     public ResponseEntity <String> eliminarUsuario(@PathVariable("id") Integer idUsuario, @RequestHeader("Authorization") String header){
         try {validarRol(header, "ADMIN");
@@ -73,7 +93,13 @@ public class ControladorPrincipal {
     
     }
     
-    
+    /**
+     * Edita los datos de un usuario existente. Método sólo válido para administradores.
+     *
+     * @param header Token JWT del usuario que realiza la petición.
+     * @param usuario Objeto con los datos a modificar.
+     * @return ResponseEntity con el usuario modificado o un error en caso de fallo.
+     */
     @PostMapping("/editarUsuario")
     public ResponseEntity <?> editarUsuario(@RequestHeader("Authorization") String header, @RequestBody Usuario usuario){       
                try{
@@ -85,17 +111,24 @@ public class ControladorPrincipal {
                }          
      }
     
-
+    
+    /**
+     * Valida que el usuario que hace la petición tenga el rol requerido.
+     *
+     * @param header Token JWT enviado en la cabecera Authorization de la petición.
+     * @param rol Rol esperado (por ejemplo, ADMIN).
+     * @return true si el rol es válido.
+     * @throws ResponseStatusException si el rol no coincide con el esperado.
+     */
     public boolean validarRol (String header, String rol){
         
-        // 1. Quitar el prefijo "Bearer "
-            String token = header.replace("Bearer ", "").trim();
-            System.out.println("El token antes del trim es: " + header);
-            System.out.println("El token después del trim es: " + token);
+        // 1. Quitar el prefijo "Bearer " que se colocó por convención al momento se mandar la petición. 
+        String token = header.replace("Bearer ", "").trim();
         
+        // 2. Extraer el rol del token. 
         String rolExtraido =  configuracion.extraerRol(token);
-        System.out.println("El rol extraído es: "+rolExtraido);
-        
+       
+        // 3. Validar si coincide con el rol esperado
         if (rolExtraido.equals(rol)){
             
             return true;

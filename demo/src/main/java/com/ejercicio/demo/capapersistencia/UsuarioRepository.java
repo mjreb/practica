@@ -10,8 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- *
- * @author vsfs2
+ * Repositorio de acceso a datos para la entidad
+ * Extiende de JpaRepository, lo cual proporciona métodos CRUD
+ * predeterminados para interactuar con la base de datos
+ * @author Maria de Jesus Rebolledo Bustillo
  */
 @Repository
 public interface UsuarioRepository extends JpaRepository <Usuario, Integer>{
