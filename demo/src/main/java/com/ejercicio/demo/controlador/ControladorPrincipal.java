@@ -29,6 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
  * Controlador REST para la gestión de usuarios.
  * Proporciona endpoints para consultar, crear, eliminar y editar usuarios.
  * Cada operación valida el rol del usuario a través de un token JWT
+ * Los endpoints devuelven información en formato JSON que SpringBoot convierte automáticamente. 
  */
 
 @RestController

@@ -40,7 +40,7 @@ public class UpdateUserTest {
         usuario = new Usuario();
         usuario.setIdUsuario(1);
         usuario.setNombre("Juan");
-        usuario.setEmail("juan@test.com");
+        usuario.setEmail("juan@gmail.com");
         usuario.setContrasena("1234");
         usuario.setRol("USER");
     }
